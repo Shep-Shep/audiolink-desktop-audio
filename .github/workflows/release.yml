@@ -1,0 +1,51 @@
+# Builds a VPM release when a tag matching package.json's version is pushed.
+# The zip holds the package files at its root; .gitattributes keeps .github out of it.
+name: Build Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read package.json
+        id: pkg
+        run: |
+          echo "name=$(jq -r .name package.json)" >> "$GITHUB_OUTPUT"
+          echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+          echo "display=$(jq -r .displayName package.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Check the tag matches the version
+        if: github.ref_type == 'tag'
+        run: |
+          if [ "${{ github.ref_name }}" != "${{ steps.pkg.outputs.version }}" ]; then
+            echo "Tag ${{ github.ref_name }} does not match package.json version ${{ steps.pkg.outputs.version }}."
+            exit 1
+          fi
+
+      - name: Zip the package
+        run: git archive --format=zip -o "${{ steps.pkg.outputs.name }}-${{ steps.pkg.outputs.version }}.zip" HEAD
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          v="${{ steps.pkg.outputs.version }}"
+          if gh release view "$v" > /dev/null 2>&1; then
+            echo "Release $v already exists; nothing to do."
+            exit 0
+          fi
+          gh release create "$v" "${{ steps.pkg.outputs.name }}-$v.zip" package.json \
+            --title "${{ steps.pkg.outputs.display }} $v" \
+            --notes "Add it through the Shep Shep package listing: https://shep-shep.github.io/vpm/" \
+            --target "$GITHUB_SHA"

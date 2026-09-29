@@ -1,0 +1,12 @@
+{
+  "name": "com.shepshep.audiolink-desktop-audio",
+  "displayName": "AudioLink Desktop Audio",
+  "version": "0.1.0",
+  "unity": "2022.3",
+  "description": "Editor testing tool: in Play mode, AudioLink reacts to whatever Windows plays (Spotify, a browser, a DJ app). The scene object is tagged EditorOnly, so it never ships in an upload.",
+  "author": {
+    "name": "Shep Shep",
+    "url": "https://github.com/Shep-Shep"
+  },
+  "license": "MIT"
+}

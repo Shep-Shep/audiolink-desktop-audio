@@ -1,0 +1,18 @@
+{
+    "name": "ShepShep.AudioLinkDesktopAudio.Editor",
+    "rootNamespace": "ShepShep.AudioTools",
+    "references": [
+        "ShepShep.AudioLinkDesktopAudio"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
