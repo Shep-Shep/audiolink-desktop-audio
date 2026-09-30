@@ -1,5 +1,7 @@
 # AudioLink Desktop Audio
 
+[![Add to VCC](https://shep-shep.github.io/vpm/badges/add-to-vcc.svg)](https://shep-shep.github.io/vpm/) [![Buy me a coffee](https://shep-shep.github.io/vpm/badges/buy-me-a-coffee.svg)](https://shepshep.gumroad.com/coffee)
+
 An editor testing tool for Unity. In Play mode, AudioLink reacts to whatever Windows is playing, so you can test audio-reactive work with Spotify, a browser or a DJ app instead of a clip or video player.
 
 ## Requirements
